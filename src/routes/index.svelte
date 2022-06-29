@@ -44,6 +44,10 @@
 	}
 
 	function minimax(board, depth, isMax) {
+		// If there are no more moves and
+		// no winner then it is a tie
+		if (isMovesLeft(board) == false) return 0;
+
 		let score = evaluate(board);
 
 		// If Maximizer has won the game
@@ -54,12 +58,8 @@
 		// If Minimizer has won the game
 		// return its evaluated score
 		// add depth so the faster option is chosen
-		if (score == -10) return score + depth;
-
-		// If there are no more moves and
-		// no winner then it is a tie
-		if (isMovesLeft(board) == false) return 0;
-
+		if (score == -10) return score - depth;
+		``;
 		// If maximizer's turn
 		if (isMax) {
 			let best = -1000;
@@ -155,11 +155,15 @@
 	];
 
 	let firstTurn = true;
+	let winner = '';
 
 	// Players move
 	function handleClick(row, col) {
-		board[row][col] = 'x';
-		botMove(row, col);
+		if (winner === '' && board[row][col] === '') {
+			board[row][col] = 'x';
+			botMove(row, col);
+			checkForWin();
+		}
 	}
 
 	function botMove(row, col) {
@@ -183,8 +187,17 @@
 		} else {
 			// If its not first turn then use the algorithm
 			let bestMove = findBestMove(board);
-			board[bestMove.row][bestMove.col] = 'o';
+
+			// If bestMove is default value then it's a draw
+			if (bestMove.row === -1) winner = 'none';
+			else board[bestMove.row][bestMove.col] = 'o';
 		}
+	}
+
+	function checkForWin() {
+		let score = evaluate(board);
+		if (score === 10) winner = 'X';
+		else if (score === -10) winner = 'O';
 	}
 
 	function resetBoard() {
@@ -194,6 +207,7 @@
 			['', '', '']
 		];
 		firstTurn = true;
+		winner = '';
 	}
 </script>
 
@@ -259,7 +273,12 @@
 	</div>
 
 	<div>
-		<h1 on:click={() => resetBoard()}>Reset</h1>
+		<h1 style="text-align: center; margin-top: 6rem;" on:click={() => resetBoard()}>Reset</h1>
+		{#if winner === 'X' || winner === 'O'}
+			<h1 style="text-align: center; margin-top: 6rem;">{winner} won</h1>
+		{:else if winner === 'none'}
+			<h1 style="text-align: center; margin-top: 6rem;">Draw</h1>
+		{/if}
 	</div>
 </div>
 
