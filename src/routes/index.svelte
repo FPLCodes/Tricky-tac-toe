@@ -143,7 +143,6 @@
 				}
 			}
 		}
-		console.log('The value of the best Move ' + 'is : ', bestVal);
 		return bestMove;
 	}
 
@@ -160,16 +159,23 @@
 
 	function handleClick(row, col) {
 		board[row][col] = 'x';
-		botMove();
+		botMove(row, col);
 	}
 
-	function botMove() {
-		if (firstTurn && board[1][1] !== 'x') {
-			board[1][1] = 'o';
+	function botMove(row, col) {
+		if (firstTurn) {
+			let botRow = Math.floor(Math.random() * 3);
+			let botCol = Math.floor(Math.random() * 3);
+
+			while (botRow === row || botCol === col) {
+				botRow = Math.floor(Math.random() * 3);
+				botCol = Math.floor(Math.random() * 3);
+			}
+
+			board[botRow][botCol] = 'o';
 			firstTurn = false;
 		} else {
 			let bestMove = findBestMove(board);
-			console.log(bestMove);
 			board[bestMove.row][bestMove.col] = 'o';
 		}
 	}
