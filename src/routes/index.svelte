@@ -6,7 +6,7 @@
 	}
 
 	function isMovesLeft(board) {
-		for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (board[i][j] == '_') return true;
+		for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (board[i][j] == '') return true;
 
 		return false;
 	}
@@ -67,7 +67,7 @@
 			for (let i = 0; i < 3; i++) {
 				for (let j = 0; j < 3; j++) {
 					// Check if cell is empty
-					if (board[i][j] == '_') {
+					if (board[i][j] == '') {
 						// Make the move
 						board[i][j] = player;
 
@@ -76,7 +76,7 @@
 						best = Math.max(best, minimax(board, depth + 1, !isMax));
 
 						// Undo the move
-						board[i][j] = '_';
+						board[i][j] = '';
 					}
 				}
 			}
@@ -91,7 +91,7 @@
 			for (let i = 0; i < 3; i++) {
 				for (let j = 0; j < 3; j++) {
 					// Check if cell is empty
-					if (board[i][j] == '_') {
+					if (board[i][j] == '') {
 						// Make the move
 						board[i][j] = opponent;
 
@@ -100,7 +100,7 @@
 						best = Math.min(best, minimax(board, depth + 1, !isMax));
 
 						// Undo the move
-						board[i][j] = '_';
+						board[i][j] = '';
 					}
 				}
 			}
@@ -121,7 +121,7 @@
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 3; j++) {
 				// Check if cell is empty
-				if (board[i][j] == '_') {
+				if (board[i][j] == '') {
 					// Make the move
 					board[i][j] = player;
 
@@ -130,7 +130,7 @@
 					let moveVal = minimax(board, 0, false);
 
 					// Undo the move
-					board[i][j] = '_';
+					board[i][j] = '';
 
 					// If the value of the current move
 					// is more than the best value, then
@@ -151,10 +151,12 @@
 		opponent = 'o';
 
 	let board = [
-		['_', '_', '_'],
-		['_', '_', '_'],
-		['_', '_', '_']
+		['', '', ''],
+		['', '', ''],
+		['', '', '']
 	];
+
+	let firstTurn = true;
 
 	function handleClick(row, col) {
 		board[row][col] = 'x';
@@ -162,68 +164,99 @@
 	}
 
 	function botMove() {
-		let bestMove = findBestMove(board);
-		console.log(bestMove);
-		board[bestMove.row][bestMove.col] = 'o';
+		if (firstTurn && board[1][1] !== 'x') {
+			board[1][1] = 'o';
+			firstTurn = false;
+		} else {
+			let bestMove = findBestMove(board);
+			console.log(bestMove);
+			board[bestMove.row][bestMove.col] = 'o';
+		}
 	}
 
 	function resetBoard() {
 		board = [
-			['_', '_', '_'],
-			['_', '_', '_'],
-			['_', '_', '_']
+			['', '', ''],
+			['', '', ''],
+			['', '', '']
 		];
+		firstTurn = true;
 	}
 </script>
 
 <div class="main">
 	<div class="board">
 		<div class="row">
-			<h1 on:click={() => handleClick(0, 0)}>
+			<div
+				style="border-top: none; border-left: none"
+				class="box"
+				on:click={() => handleClick(0, 0)}
+			>
 				{board[0][0]}
-			</h1>
-			<h1 on:click={() => handleClick(0, 1)}>
+			</div>
+
+			<div style="border-top: none;" class="box" on:click={() => handleClick(0, 1)}>
 				{board[0][1]}
-			</h1>
-			<h1 on:click={() => handleClick(0, 2)}>
+			</div>
+
+			<div
+				style="border-top: none; border-right: none"
+				class="box"
+				on:click={() => handleClick(0, 2)}
+			>
 				{board[0][2]}
-			</h1>
+			</div>
 		</div>
 
 		<div class="row">
-			<h1 on:click={() => handleClick(1, 0)}>
+			<div style="border-left: none;" class="box" on:click={() => handleClick(1, 0)}>
 				{board[1][0]}
-			</h1>
-			<h1 on:click={() => handleClick(1, 1)}>
+			</div>
+
+			<div class="box" on:click={() => handleClick(1, 1)}>
 				{board[1][1]}
-			</h1>
-			<h1 on:click={() => handleClick(1, 2)}>
+			</div>
+
+			<div style="border-right: none;" class="box" on:click={() => handleClick(1, 2)}>
 				{board[1][2]}
-			</h1>
+			</div>
 		</div>
 
 		<div class="row">
-			<h1 on:click={() => handleClick(2, 0)}>
+			<div
+				style="border-bottom: none; border-left: none"
+				class="box"
+				on:click={() => handleClick(2, 0)}
+			>
 				{board[2][0]}
-			</h1>
-			<h1 on:click={() => handleClick(2, 1)}>
+			</div>
+
+			<div style="border-bottom: none;" class="box" on:click={() => handleClick(2, 1)}>
 				{board[2][1]}
-			</h1>
-			<h1 on:click={() => handleClick(2, 2)}>
+			</div>
+
+			<div
+				style="border-bottom: none; border-right: none"
+				class="box"
+				on:click={() => handleClick(2, 2)}
+			>
 				{board[2][2]}
-			</h1>
+			</div>
 		</div>
+	</div>
+
+	<div>
+		<h1 on:click={() => resetBoard()}>Reset</h1>
 	</div>
 </div>
 
 <style>
 	.main {
 		font-family: 'Roboto';
-		height: 100vh;
-		margin-top: 50%;
 	}
 
 	.board {
+		margin-top: 40%;
 		line-height: 0px;
 		font-size: 28px;
 		display: flex;
@@ -233,6 +266,17 @@
 
 	.row {
 		display: flex;
-		gap: 10px;
+		text-align: center;
+	}
+
+	.box {
+		border: solid;
+		width: 4.5rem;
+		height: 4.5rem;
+		font-size: 38px;
+		font-weight: bold;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
