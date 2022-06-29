@@ -58,8 +58,8 @@
 		// If Minimizer has won the game
 		// return its evaluated score
 		// add depth so the faster option is chosen
-		if (score == -10) return score - depth;
-		``;
+		if (score == -10) return score + depth;
+
 		// If maximizer's turn
 		if (isMax) {
 			let best = -1000;
@@ -137,6 +137,8 @@
 						bestMove.row = i;
 						bestMove.col = j;
 						bestVal = moveVal;
+						console.log(bestVal);
+						console.log(bestMove);
 					}
 				}
 			}
@@ -161,6 +163,8 @@
 	function handleClick(row, col) {
 		if (winner === '' && board[row][col] === '') {
 			board[row][col] = 'x';
+			checkForWin();
+
 			botMove(row, col);
 			checkForWin();
 		}
@@ -190,7 +194,7 @@
 
 			// If bestMove is default value then it's a draw
 			if (bestMove.row === -1) winner = 'none';
-			else board[bestMove.row][bestMove.col] = 'o';
+			else if (winner === '') board[bestMove.row][bestMove.col] = 'o';
 		}
 	}
 
@@ -273,7 +277,7 @@
 	</div>
 
 	<div>
-		<h1 style="text-align: center; margin-top: 6rem;" on:click={() => resetBoard()}>Reset</h1>
+		<h1 style="text-align: center; margin-top: 6rem;" on:click={() => resetBoard()}>RESET</h1>
 		{#if winner === 'X' || winner === 'O'}
 			<h1 style="text-align: center; margin-top: 6rem;">{winner} won</h1>
 		{:else if winner === 'none'}
@@ -305,7 +309,7 @@
 		border: solid;
 		width: 4.5rem;
 		height: 4.5rem;
-		font-size: 38px;
+		font-size: 3.5rem;
 		font-weight: bold;
 		display: flex;
 		justify-content: center;
