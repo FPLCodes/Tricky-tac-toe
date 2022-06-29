@@ -12,7 +12,7 @@
 	}
 
 	function evaluate(b) {
-		// Checking for Rows for X or O victory.
+		// Checking all rows for X or O victory.
 		for (let row = 0; row < 3; row++) {
 			if (b[row][0] == b[row][1] && b[row][1] == b[row][2]) {
 				if (b[row][0] == player) return +10;
@@ -20,7 +20,7 @@
 			}
 		}
 
-		// Checking for Columns for X or O victory.
+		// Checking all columns for X or O victory.
 		for (let col = 0; col < 3; col++) {
 			if (b[0][col] == b[1][col] && b[1][col] == b[2][col]) {
 				if (b[0][col] == player) return +10;
@@ -28,7 +28,7 @@
 			}
 		}
 
-		// Checking for Diagonals for X or O victory.
+		// Checking all diagonals for X or O victory.
 		if (b[0][0] == b[1][1] && b[1][1] == b[2][2]) {
 			if (b[0][0] == player) return +10;
 			else if (b[0][0] == opponent) return -10;
@@ -39,8 +39,7 @@
 			else if (b[0][2] == opponent) return -10;
 		}
 
-		// Else if none of them have
-		// won then return 0
+		// If draw, return 0
 		return 0;
 	}
 
@@ -48,18 +47,20 @@
 		let score = evaluate(board);
 
 		// If Maximizer has won the game
-		// return his/her evaluated score
+		// return its evaluated score
+		// subtract depth so the faster option is chosen
 		if (score == 10) return score - depth;
 
 		// If Minimizer has won the game
-		// return his/her evaluated score
+		// return its evaluated score
+		// add depth so the faster option is chosen
 		if (score == -10) return score + depth;
 
 		// If there are no more moves and
 		// no winner then it is a tie
 		if (isMovesLeft(board) == false) return 0;
 
-		// If this maximizer's move
+		// If maximizer's turn
 		if (isMax) {
 			let best = -1000;
 
@@ -83,7 +84,7 @@
 			return best;
 		}
 
-		// If this minimizer's move
+		// If minimizer's turn
 		else {
 			let best = 1000;
 
@@ -95,8 +96,7 @@
 						// Make the move
 						board[i][j] = opponent;
 
-						// Call minimax recursively and
-						// choose the minimum value
+						// Call minimax recursively and choose minimum value
 						best = Math.min(best, minimax(board, depth + 1, !isMax));
 
 						// Undo the move
@@ -114,10 +114,9 @@
 		bestMove.row = -1;
 		bestMove.col = -1;
 
-		// Traverse all cells, evaluate
-		// minimax function for all empty
-		// cells. And return the cell
-		// with optimal value.
+		// Traverse all cells and evaluate
+		// minimax function for all empty cells.
+		// Return the cell with optimal value.
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 3; j++) {
 				// Check if cell is empty
@@ -125,8 +124,7 @@
 					// Make the move
 					board[i][j] = player;
 
-					// compute evaluation function
-					// for this move.
+					// compute evaluation function for this move.
 					let moveVal = minimax(board, 0, false);
 
 					// Undo the move
@@ -146,6 +144,7 @@
 		return bestMove;
 	}
 
+	// Initialising variables
 	let player = 'x',
 		opponent = 'o';
 
@@ -157,6 +156,7 @@
 
 	let firstTurn = true;
 
+	// Players move
 	function handleClick(row, col) {
 		board[row][col] = 'x';
 		botMove(row, col);
@@ -164,9 +164,15 @@
 
 	function botMove(row, col) {
 		if (firstTurn) {
+			// This is just to add some 'randomness' to the game
+
+			// Get random position for bot
+			// if its the first turn
 			let botRow = Math.floor(Math.random() * 3);
 			let botCol = Math.floor(Math.random() * 3);
 
+			// If the position is the same as the player,
+			// get new position
 			while (botRow === row || botCol === col) {
 				botRow = Math.floor(Math.random() * 3);
 				botCol = Math.floor(Math.random() * 3);
@@ -175,6 +181,7 @@
 			board[botRow][botCol] = 'o';
 			firstTurn = false;
 		} else {
+			// If its not first turn then use the algorithm
 			let bestMove = findBestMove(board);
 			board[bestMove.row][bestMove.col] = 'o';
 		}
