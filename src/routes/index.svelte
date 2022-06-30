@@ -74,7 +74,7 @@
 
 						// Call minimax recursively
 						// and choose the maximum value
-						best = Math.max(best, minimax(board, depth + 1, !isMax));
+						best = Math.max(best, minimax(board, depth + 1, false));
 
 						// Undo the move
 						board[i][j] = '';
@@ -97,7 +97,7 @@
 						board[i][j] = opponent;
 
 						// Call minimax recursively and choose minimum value
-						best = Math.min(best, minimax(board, depth + 1, !isMax));
+						best = Math.min(best, minimax(board, depth + 1, true));
 
 						// Undo the move
 						board[i][j] = '';
@@ -130,6 +130,7 @@
 					// Undo the move
 					board[i][j] = '';
 
+					console.log(`cell ${i} ${j}: ${moveVal}`);
 					// If the value of the current move
 					// is more than the best value, then
 					// update best
@@ -137,8 +138,6 @@
 						bestMove.row = i;
 						bestMove.col = j;
 						bestVal = moveVal;
-						console.log(bestVal);
-						console.log(bestMove);
 					}
 				}
 			}
@@ -173,7 +172,7 @@
 	}
 
 	function botMove(row, col) {
-		if (firstTurn) {
+		/* 		if (firstTurn) {
 			// This is just to add some 'randomness' to the game
 
 			// Get random position for bot
@@ -197,7 +196,13 @@
 			// If bestMove is default value then it's a draw
 			if (bestMove.row === -1) winner = 'none';
 			else if (winner === '') board[bestMove.row][bestMove.col] = 'o';
-		}
+		} */
+		// If its not first turn then use the algorithm
+		let bestMove = findBestMove(board);
+
+		// If bestMove is default value then it's a draw
+		if (bestMove.row === -1) winner = 'none';
+		else if (winner === '') board[bestMove.row][bestMove.col] = 'o';
 	}
 
 	function checkForWin() {
