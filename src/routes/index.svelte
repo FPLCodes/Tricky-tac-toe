@@ -5,50 +5,50 @@
 		}
 	}
 
-	function isMovesLeft(board) {
+	function isMovesLeft() {
 		for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (board[i][j] == '') return true;
 
 		return false;
 	}
 
-	function evaluate(b) {
+	function evaluate() {
 		// Checking all rows for X or O victory.
 		for (let row = 0; row < 3; row++) {
-			if (b[row][0] == b[row][1] && b[row][1] == b[row][2]) {
-				if (b[row][0] == player) return +10;
-				else if (b[row][0] == opponent) return -10;
+			if (board[row][0] == board[row][1] && board[row][1] == board[row][2]) {
+				if (board[row][0] == opponent) return +10;
+				else if (board[row][0] == player) return -10;
 			}
 		}
 
 		// Checking all columns for X or O victory.
 		for (let col = 0; col < 3; col++) {
-			if (b[0][col] == b[1][col] && b[1][col] == b[2][col]) {
-				if (b[0][col] == player) return +10;
-				else if (b[0][col] == opponent) return -10;
+			if (board[0][col] == board[1][col] && board[1][col] == board[2][col]) {
+				if (board[0][col] == opponent) return +10;
+				else if (board[0][col] == player) return -10;
 			}
 		}
 
 		// Checking all diagonals for X or O victory.
-		if (b[0][0] == b[1][1] && b[1][1] == b[2][2]) {
-			if (b[0][0] == player) return +10;
-			else if (b[0][0] == opponent) return -10;
+		if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+			if (board[0][0] == opponent) return +10;
+			else if (board[0][0] == player) return -10;
 		}
 
-		if (b[0][2] == b[1][1] && b[1][1] == b[2][0]) {
-			if (b[0][2] == player) return +10;
-			else if (b[0][2] == opponent) return -10;
+		if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+			if (board[0][2] == opponent) return +10;
+			else if (board[0][2] == player) return -10;
 		}
 
 		// If draw, return 0
 		return 0;
 	}
 
-	function minimax(board, depth, isMax) {
+	function minimax(depth, isMax) {
 		// If there are no more moves and
 		// no winner then it is a tie
-		if (isMovesLeft(board) == false) return 0;
+		if (isMovesLeft() == false) return 0;
 
-		let score = evaluate(board);
+		let score = evaluate();
 
 		// If Maximizer has won the game
 		// return its evaluated score
@@ -70,11 +70,11 @@
 					// Check if cell is empty
 					if (board[i][j] == '') {
 						// Make the move
-						board[i][j] = player;
+						board[i][j] = opponent;
 
 						// Call minimax recursively
 						// and choose the maximum value
-						best = Math.max(best, minimax(board, depth + 1, false));
+						best = Math.max(best, minimax(depth + 1, false));
 
 						// Undo the move
 						board[i][j] = '';
@@ -94,10 +94,10 @@
 					// Check if cell is empty
 					if (board[i][j] == '') {
 						// Make the move
-						board[i][j] = opponent;
+						board[i][j] = player;
 
 						// Call minimax recursively and choose minimum value
-						best = Math.min(best, minimax(board, depth + 1, true));
+						best = Math.min(best, minimax(depth + 1, true));
 
 						// Undo the move
 						board[i][j] = '';
@@ -108,7 +108,7 @@
 		}
 	}
 
-	function findBestMove(board) {
+	function findBestMove() {
 		let bestVal = -1000;
 		let bestMove = new Move();
 		bestMove.row = -1;
@@ -122,10 +122,10 @@
 				// Check if cell is empty
 				if (board[i][j] == '') {
 					// Make the move
-					board[i][j] = player;
+					board[i][j] = opponent;
 
 					// compute evaluation function for this move.
-					let moveVal = minimax(board, 0, false);
+					let moveVal = minimax(0, false);
 
 					// Undo the move
 					board[i][j] = '';
@@ -155,7 +155,6 @@
 		['', '', '']
 	];
 
-	let firstTurn = true;
 	let xScore = 0,
 		oScore = 0;
 	let winner = '';
@@ -166,38 +165,12 @@
 			board[row][col] = 'x';
 			checkForWin();
 
-			botMove(row, col);
+			botMove();
 			checkForWin();
 		}
 	}
 
-	function botMove(row, col) {
-		/* 		if (firstTurn) {
-			// This is just to add some 'randomness' to the game
-
-			// Get random position for bot
-			// if its the first turn
-			let botRow = Math.floor(Math.random() * 3);
-			let botCol = Math.floor(Math.random() * 3);
-
-			// If the position is the same as the player,
-			// get new position
-			while (botRow === row || botCol === col) {
-				botRow = Math.floor(Math.random() * 3);
-				botCol = Math.floor(Math.random() * 3);
-			}
-
-			board[botRow][botCol] = 'o';
-			firstTurn = false;
-		} else {
-			// If its not first turn then use the algorithm
-			let bestMove = findBestMove(board);
-
-			// If bestMove is default value then it's a draw
-			if (bestMove.row === -1) winner = 'none';
-			else if (winner === '') board[bestMove.row][bestMove.col] = 'o';
-		} */
-		// If its not first turn then use the algorithm
+	function botMove() {
 		let bestMove = findBestMove(board);
 
 		// If bestMove is default value then it's a draw
@@ -206,13 +179,15 @@
 	}
 
 	function checkForWin() {
-		let score = evaluate(board);
-		if (score === 10 && winner == '') {
-			winner = 'X';
-			xScore++;
-		} else if (score === -10 && winner == '') {
-			winner = 'O';
-			oScore++;
+		let score = evaluate();
+		if (winner === '') {
+			if (score === -10) {
+				winner = 'X';
+				xScore++;
+			} else if (score === 10) {
+				winner = 'O';
+				oScore++;
+			}
 		}
 	}
 
