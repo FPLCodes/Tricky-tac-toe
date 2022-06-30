@@ -197,7 +197,6 @@
 			['', '', ''],
 			['', '', '']
 		];
-		firstTurn = true;
 		winner = '';
 	}
 </script>
@@ -268,7 +267,9 @@
 	</div>
 
 	<div>
-		<h1 style="text-align: center; margin-top: 6rem;" on:click={() => resetBoard()}>RESET</h1>
+		<h1 style="text-align: center; margin-top: 6rem; cursor: pointer" on:click={() => resetBoard()}>
+			RESET
+		</h1>
 		{#if winner === 'X' || winner === 'O'}
 			<h1 style="text-align: center; margin-top: 4rem;">{winner} won</h1>
 		{:else if winner === 'none'}
@@ -304,13 +305,32 @@
 	}
 
 	.box {
-		border: solid;
+		border: solid 0.25rem;
 		width: 6rem;
 		height: 6rem;
-		font-size: 4.5rem;
+		font-size: 5rem;
 		font-weight: bold;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		transition: all 0.25s;
+		cursor: default;
+		animation: load 0.8s;
+		animation-iteration-count: 1;
+	}
+
+	.box:hover {
+		background-color: #f0f0f0;
+	}
+
+	@keyframes load {
+		from {
+			width: 0;
+			opacity: 0;
+		}
+		to {
+			width: 6rem;
+			opacity: 1;
+		}
 	}
 </style>
