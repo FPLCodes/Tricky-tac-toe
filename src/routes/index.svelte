@@ -157,6 +157,8 @@
 	];
 
 	let firstTurn = true;
+	let xScore = 0,
+		oScore = 0;
 	let winner = '';
 
 	// Players move
@@ -200,8 +202,13 @@
 
 	function checkForWin() {
 		let score = evaluate(board);
-		if (score === 10) winner = 'X';
-		else if (score === -10) winner = 'O';
+		if (score === 10 && winner == '') {
+			winner = 'X';
+			xScore++;
+		} else if (score === -10 && winner == '') {
+			winner = 'O';
+			oScore++;
+		}
 	}
 
 	function resetBoard() {
@@ -217,6 +224,10 @@
 
 <div class="main">
 	<div class="board">
+		<div class="score">
+			<h2>X: {xScore}</h2>
+			<h2>O: {oScore}</h2>
+		</div>
 		<div class="row">
 			<div
 				style="border-top: none; border-left: none"
@@ -279,22 +290,29 @@
 	<div>
 		<h1 style="text-align: center; margin-top: 6rem;" on:click={() => resetBoard()}>RESET</h1>
 		{#if winner === 'X' || winner === 'O'}
-			<h1 style="text-align: center; margin-top: 6rem;">{winner} won</h1>
+			<h1 style="text-align: center; margin-top: 4rem;">{winner} won</h1>
 		{:else if winner === 'none'}
-			<h1 style="text-align: center; margin-top: 6rem;">Draw</h1>
+			<h1 style="text-align: center; margin-top: 4rem;">Draw</h1>
 		{/if}
 	</div>
 </div>
 
 <style>
 	.main {
-		font-family: 'Roboto';
+		font-family: 'Apercu';
+		margin-top: 10rem;
+	}
+
+	.score {
+		display: flex;
+		gap: 6rem;
+		justify-content: center;
+		margin-bottom: 4rem;
+		font-size: 2rem;
 	}
 
 	.board {
-		margin-top: 40%;
 		line-height: 0px;
-		font-size: 28px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -307,9 +325,9 @@
 
 	.box {
 		border: solid;
-		width: 4.5rem;
-		height: 4.5rem;
-		font-size: 3.5rem;
+		width: 6rem;
+		height: 6rem;
+		font-size: 4.5rem;
 		font-weight: bold;
 		display: flex;
 		justify-content: center;
