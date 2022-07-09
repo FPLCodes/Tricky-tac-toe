@@ -11,7 +11,7 @@
 		return false;
 	}
 
-	function evaluate() {
+	function evaluate(board) {
 		// Checking all rows for X or O victory.
 		for (let row = 0; row < 3; row++) {
 			if (board[row][0] == board[row][1] && board[row][1] == board[row][2]) {
@@ -43,12 +43,8 @@
 		return 0;
 	}
 
-	function minimax(depth, isMax) {
-		// If there are no more moves and
-		// no winner then it is a tie
-		if (isMovesLeft() == false) return 0;
-
-		let score = evaluate();
+	function minimax(board, depth, isMax) {
+		let score = evaluate(board);
 
 		// If Maximizer has won the game
 		// return its evaluated score
@@ -59,6 +55,10 @@
 		// return its evaluated score
 		// add depth so the faster option is chosen
 		if (score == -10) return score + depth;
+
+		// If there are no more moves and
+		// no winner then it is a tie
+		if (isMovesLeft() == false) return 0;
 
 		// If maximizer's turn
 		if (isMax) {
@@ -74,7 +74,7 @@
 
 						// Call minimax recursively
 						// and choose the maximum value
-						best = Math.max(best, minimax(depth + 1, false));
+						best = Math.max(best, minimax(board, depth + 1, false));
 
 						// Undo the move
 						board[i][j] = '';
@@ -97,7 +97,7 @@
 						board[i][j] = player;
 
 						// Call minimax recursively and choose minimum value
-						best = Math.min(best, minimax(depth + 1, true));
+						best = Math.min(best, minimax(board, depth + 1, true));
 
 						// Undo the move
 						board[i][j] = '';
@@ -108,7 +108,7 @@
 		}
 	}
 
-	function findBestMove() {
+	function findBestMove(board) {
 		let bestVal = -1000;
 		let bestMove = new Move();
 		bestMove.row = -1;
@@ -125,7 +125,7 @@
 					board[i][j] = opponent;
 
 					// compute evaluation function for this move.
-					let moveVal = minimax(0, false);
+					let moveVal = minimax(board, 0, false);
 
 					// Undo the move
 					board[i][j] = '';
@@ -176,12 +176,12 @@
 		let bestMove = findBestMove(board);
 
 		// If bestMove is default value then it's a draw
-		if (winner === '') board[bestMove.row][bestMove.col] = 'o';
-		else if (bestMove.row === -1) winner = 'none';
+		if (bestMove.row === -1) winner = 'none';
+		else if (winner === '') board[bestMove.row][bestMove.col] = 'o';
 	}
 
 	function checkForWin() {
-		let score = evaluate();
+		let score = evaluate(board);
 		console.log(score);
 		if (winner === '') {
 			if (score === -10) {
