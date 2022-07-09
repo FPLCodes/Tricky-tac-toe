@@ -165,8 +165,10 @@
 			board[row][col] = 'x';
 			checkForWin();
 
-			botMove();
-			checkForWin();
+			if (winner === '') {
+				botMove();
+				checkForWin();
+			}
 		}
 	}
 
@@ -174,12 +176,13 @@
 		let bestMove = findBestMove(board);
 
 		// If bestMove is default value then it's a draw
-		if (bestMove.row === -1) winner = 'none';
-		else if (winner === '') board[bestMove.row][bestMove.col] = 'o';
+		if (winner === '') board[bestMove.row][bestMove.col] = 'o';
+		else if (bestMove.row === -1) winner = 'none';
 	}
 
 	function checkForWin() {
 		let score = evaluate();
+		console.log(score);
 		if (winner === '') {
 			if (score === -10) {
 				winner = 'X';
