@@ -157,7 +157,11 @@
 
 	let xScore = 0,
 		oScore = 0;
+
 	let winner = '';
+
+	let xStyle = 'color: #D8A7B1;',
+		oStyle = 'color: #A9C9C9';
 
 	// Players move
 	function handleClick(row, col) {
@@ -216,11 +220,19 @@
 				class="box"
 				on:click={() => handleClick(0, 0)}
 			>
-				{board[0][0]}
+				{#if board[0][0] === 'x'}
+					<p style={xStyle}>{board[0][0]}</p>
+				{:else}
+					<p style={oStyle}>{board[0][0]}</p>
+				{/if}
 			</div>
 
 			<div style="border-top: none;" class="box" on:click={() => handleClick(0, 1)}>
-				{board[0][1]}
+				{#if board[0][1] === 'x'}
+					<p style={xStyle}>{board[0][1]}</p>
+				{:else}
+					<p style={oStyle}>{board[0][1]}</p>
+				{/if}
 			</div>
 
 			<div
@@ -228,21 +240,37 @@
 				class="box"
 				on:click={() => handleClick(0, 2)}
 			>
-				{board[0][2]}
+				{#if board[0][2] === 'x'}
+					<p style={xStyle}>{board[0][2]}</p>
+				{:else}
+					<p style={oStyle}>{board[0][2]}</p>
+				{/if}
 			</div>
 		</div>
 
 		<div class="row">
 			<div style="border-left: none;" class="box" on:click={() => handleClick(1, 0)}>
-				{board[1][0]}
+				{#if board[1][0] === 'x'}
+					<p style={xStyle}>{board[1][0]}</p>
+				{:else}
+					<p style={oStyle}>{board[1][0]}</p>
+				{/if}
 			</div>
 
 			<div class="box" on:click={() => handleClick(1, 1)}>
-				{board[1][1]}
+				{#if board[1][1] === 'x'}
+					<p style="color: #D8A7B1">{board[1][1]}</p>
+				{:else}
+					<p style="color: #A9C9C9">{board[1][1]}</p>
+				{/if}
 			</div>
 
 			<div style="border-right: none;" class="box" on:click={() => handleClick(1, 2)}>
-				{board[1][2]}
+				{#if board[1][2] === 'x'}
+					<p style={xStyle}>{board[1][2]}</p>
+				{:else}
+					<p style={oStyle}>{board[1][2]}</p>
+				{/if}
 			</div>
 		</div>
 
@@ -252,11 +280,19 @@
 				class="box"
 				on:click={() => handleClick(2, 0)}
 			>
-				{board[2][0]}
+				{#if board[2][0] === 'x'}
+					<p style={xStyle}>{board[2][0]}</p>
+				{:else}
+					<p style={oStyle}>{board[2][0]}</p>
+				{/if}
 			</div>
 
 			<div style="border-bottom: none;" class="box" on:click={() => handleClick(2, 1)}>
-				{board[2][1]}
+				{#if board[2][1] === 'x'}
+					<p style="color: #D8A7B1">{board[2][1]}</p>
+				{:else}
+					<p style="color: #A9C9C9">{board[2][1]}</p>
+				{/if}
 			</div>
 
 			<div
@@ -264,7 +300,11 @@
 				class="box"
 				on:click={() => handleClick(2, 2)}
 			>
-				{board[2][2]}
+				{#if board[2][2] === 'x'}
+					<p style={xStyle}>{board[2][2]}</p>
+				{:else}
+					<p style={oStyle}>{board[2][2]}</p>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -309,8 +349,9 @@
 		border: solid 0.25rem;
 		width: 6rem;
 		height: 6rem;
-		font-size: 5rem;
-		font-weight: bold;
+		padding-bottom: 6px;
+		font-size: 6rem;
+		font-weight: 500;
 		display: flex;
 		justify-content: center;
 		align-items: center;
