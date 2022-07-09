@@ -269,10 +269,8 @@
 		</div>
 	</div>
 
-	<div>
-		<h1 style="text-align: center; margin-top: 6rem; cursor: pointer" on:click={() => resetBoard()}>
-			RESET
-		</h1>
+	<div class="bottom">
+		<h1 style="margin-top: 6rem; cursor: pointer" on:click={() => resetBoard()}>RESET</h1>
 		{#if winner === 'X' || winner === 'O'}
 			<h1 style="text-align: center; margin-top: 4rem;">{winner} won</h1>
 		{:else if winner === 'none'}
@@ -323,7 +321,7 @@
 	}
 
 	.box:hover {
-		background-color: #f0f0f0;
+		background-color: #b6e2d3;
 	}
 
 	@keyframes load {
@@ -335,5 +333,9 @@
 			width: 6rem;
 			opacity: 1;
 		}
+	}
+
+	.bottom {
+		text-align: center;
 	}
 </style>
