@@ -208,7 +208,7 @@
 	}
 </script>
 
-<div class="main">
+<div class="container">
 	<div class="board">
 		<div class="score">
 			<h2>X: {xScore}</h2>
@@ -309,12 +309,12 @@
 		</div>
 	</div>
 
-	<div class="bottom">
+	<div style="text-align: center;">
 		<h1 style="margin-top: 3rem; cursor: pointer" on:click={() => resetBoard()}>RESET</h1>
 		{#if winner === 'X' || winner === 'O'}
-			<h1 style="text-align: center; margin-top: 2rem;">{winner} wins!</h1>
+			<h1 style="text-align: center; margin-top: 1.5rem;">{winner} wins!</h1>
 		{:else if winner === 'none'}
-			<h1 style="text-align: center; margin-top: 2rem;">Draw!</h1>
+			<h1 style="text-align: center; margin-top: 1.5rem;">Draw!</h1>
 		{/if}
 	</div>
 </div>
@@ -325,7 +325,7 @@
 		gap: 6rem;
 		justify-content: center;
 		margin-bottom: 4rem;
-		font-size: 2rem;
+		font-size: 2.3rem;
 	}
 
 	.board {
@@ -342,10 +342,10 @@
 
 	.box {
 		border: solid 0.25rem;
-		width: 6rem;
-		height: 6rem;
+		width: 7rem;
+		height: 7rem;
 		padding-bottom: 6px;
-		font-size: 6rem;
+		font-size: 6.5rem;
 		font-weight: 500;
 		display: flex;
 		justify-content: center;
@@ -369,9 +369,5 @@
 			width: 6rem;
 			opacity: 1;
 		}
-	}
-
-	.bottom {
-		text-align: center;
 	}
 </style>
