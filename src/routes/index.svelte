@@ -310,9 +310,9 @@
 	</div>
 
 	<div class="bottom">
-		<h1 style="margin-top: 6rem; cursor: pointer" on:click={() => resetBoard()}>RESET</h1>
+		<h1 style="margin-top: 2rem; cursor: pointer" on:click={() => resetBoard()}>RESET</h1>
 		{#if winner === 'X' || winner === 'O'}
-			<h1 style="text-align: center; margin-top: 4rem;">{winner} won</h1>
+			<h1 style="text-align: center; margin-top: 4rem;">{winner} wins!</h1>
 		{:else if winner === 'none'}
 			<h1 style="text-align: center; margin-top: 4rem;">Draw</h1>
 		{/if}
@@ -320,9 +320,6 @@
 </div>
 
 <style>
-	.main {
-	}
-
 	.score {
 		display: flex;
 		gap: 6rem;
