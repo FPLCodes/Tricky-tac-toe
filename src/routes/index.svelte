@@ -321,7 +321,6 @@
 
 <style>
 	.main {
-		margin-top: 10rem;
 	}
 
 	.score {
