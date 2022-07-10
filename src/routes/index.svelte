@@ -321,7 +321,6 @@
 
 <style>
 	.main {
-		font-family: 'Apercu';
 		margin-top: 10rem;
 	}
 
