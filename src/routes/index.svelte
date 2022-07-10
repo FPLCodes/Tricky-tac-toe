@@ -211,8 +211,8 @@
 <div class="container">
 	<div class="board">
 		<div class="score">
-			<h2>X: {xScore}</h2>
-			<h2>O: {oScore}</h2>
+			<h2 style={xStyle}>X: {xScore}</h2>
+			<h2 style={oStyle}>O: {oScore}</h2>
 		</div>
 		<div class="row">
 			<div
@@ -259,9 +259,9 @@
 
 			<div class="box" on:click={() => handleClick(1, 1)}>
 				{#if board[1][1] === 'x'}
-					<p style="color: #D8A7B1">{board[1][1]}</p>
+					<p style={xStyle}>{board[1][1]}</p>
 				{:else}
-					<p style="color: #A9C9C9">{board[1][1]}</p>
+					<p style={oStyle}>{board[1][1]}</p>
 				{/if}
 			</div>
 
@@ -289,9 +289,9 @@
 
 			<div style="border-bottom: none;" class="box" on:click={() => handleClick(2, 1)}>
 				{#if board[2][1] === 'x'}
-					<p style="color: #D8A7B1">{board[2][1]}</p>
+					<p style={xStyle}>{board[2][1]}</p>
 				{:else}
-					<p style="color: #A9C9C9">{board[2][1]}</p>
+					<p style={oStyle}>{board[2][1]}</p>
 				{/if}
 			</div>
 
@@ -310,12 +310,12 @@
 	</div>
 
 	<div style="text-align: center;">
-		<h1 style="margin-top: 3rem; cursor: pointer" on:click={() => resetBoard()}>RESET</h1>
 		{#if winner === 'X' || winner === 'O'}
-			<h1 style="text-align: center; margin-top: 1.5rem;">{winner} wins!</h1>
+			<h1 style="text-align: center; margin-top: 1.3rem;">{winner} wins!</h1>
 		{:else if winner === 'none'}
-			<h1 style="text-align: center; margin-top: 1.5rem;">Draw!</h1>
+			<h1 style="text-align: center; margin-top: 1.3rem;">Draw!</h1>
 		{/if}
+		<h1 class="reset" on:click={() => resetBoard()}>RESET</h1>
 	</div>
 </div>
 
@@ -369,5 +369,18 @@
 			width: 6rem;
 			opacity: 1;
 		}
+	}
+
+	.reset {
+		margin-top: 1rem;
+		cursor: pointer;
+		border: solid 3px;
+		border-radius: 6px;
+		transition: ease-in;
+		transition-duration: 0.1s;
+	}
+
+	.reset:hover {
+		background-color: #fdc4c4;
 	}
 </style>
