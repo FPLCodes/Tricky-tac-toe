@@ -130,7 +130,6 @@
 					// Undo the move
 					board[i][j] = '';
 
-					console.log(`cell ${i} ${j}: ${moveVal}`);
 					// If the value of the current move
 					// is more than the best value, then
 					// update best
@@ -179,14 +178,15 @@
 	function botMove() {
 		let bestMove = findBestMove(board);
 
-		// If bestMove is default value then it's a draw
+		// If bestMove is default value, it's a draw
+		// Otherwise make move as usual
 		if (bestMove.row === -1) winner = 'none';
 		else if (winner === '') board[bestMove.row][bestMove.col] = 'o';
 	}
 
 	function checkForWin() {
 		let score = evaluate(board);
-		console.log(score);
+
 		if (winner === '') {
 			if (score === -10) {
 				winner = 'X';
@@ -310,11 +310,11 @@
 	</div>
 
 	<div class="bottom">
-		<h1 style="margin-top: 2rem; cursor: pointer" on:click={() => resetBoard()}>RESET</h1>
+		<h1 style="margin-top: 3rem; cursor: pointer" on:click={() => resetBoard()}>RESET</h1>
 		{#if winner === 'X' || winner === 'O'}
-			<h1 style="text-align: center; margin-top: 4rem;">{winner} wins!</h1>
+			<h1 style="text-align: center; margin-top: 2rem;">{winner} wins!</h1>
 		{:else if winner === 'none'}
-			<h1 style="text-align: center; margin-top: 4rem;">Draw</h1>
+			<h1 style="text-align: center; margin-top: 2rem;">Draw!</h1>
 		{/if}
 	</div>
 </div>
