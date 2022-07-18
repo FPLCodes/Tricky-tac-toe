@@ -223,7 +223,7 @@
 				{#if board[0][0] === 'x'}
 					<p style={xStyle}>{board[0][0]}</p>
 				{:else}
-					<p style={oStyle}>{board[0][0]}</p>
+					<div id="o" />
 				{/if}
 			</div>
 
