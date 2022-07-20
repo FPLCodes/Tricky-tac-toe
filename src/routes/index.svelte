@@ -68,8 +68,12 @@
 <div class="container">
 	<div class="board">
 		<div class="score">
-			<h2 style="color: #D8A7B1;">X: {xScore}</h2>
-			<h2 style="color: #A9C9C9">O: {oScore}</h2>
+			<div class="score-card">
+				<h2 style="color: #D8A7B1;">X: {xScore}</h2>
+			</div>
+			<div class="score-card">
+				<h2 style="color: #A9C9C9">O: {oScore}</h2>
+			</div>
 		</div>
 		<div class="row">
 			<div
@@ -179,10 +183,19 @@
 <style>
 	.score {
 		display: flex;
-		gap: 6rem;
+		gap: 3.5rem;
 		justify-content: center;
+		margin-top: 0.2rem;
 		margin-bottom: 4rem;
 		font-size: 2.3rem;
+	}
+
+	.score-card {
+		background-color: #f9eae3;
+		border: solid 4px #d98491;
+		border-radius: 0.75rem;
+		width: 9rem;
+		text-align: center;
 	}
 
 	.board {
