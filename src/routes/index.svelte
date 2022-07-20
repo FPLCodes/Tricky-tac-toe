@@ -1,6 +1,6 @@
 <script>
-	import XDraw from '$lib/XDraw.svelte';
-	import ODraw from '$lib/ODraw.svelte';
+	import XDraw from '$lib/components/XDraw.svelte';
+	import ODraw from '$lib/components/ODraw.svelte';
 
 	class Move {
 		constructor() {
