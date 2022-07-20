@@ -1,4 +1,7 @@
 <script>
+	import XDraw from '$lib/XDraw.svelte';
+	import ODraw from '$lib/ODraw.svelte';
+
 	class Move {
 		constructor() {
 			let row, col;
@@ -159,12 +162,6 @@
 
 	let winner = '';
 
-	let xStyle = 'color: #D8A7B1;',
-		oStyle = 'color: #A9C9C9';
-
-	import XDraw from '$lib/XDraw.svelte';
-	import ODraw from '$lib/ODraw.svelte';
-
 	// Players move
 	function handleClick(row, col) {
 		if (winner === '' && board[row][col] === '') {
@@ -214,8 +211,8 @@
 <div class="container">
 	<div class="board">
 		<div class="score">
-			<h2 style={xStyle}>X: {xScore}</h2>
-			<h2 style={oStyle}>O: {oScore}</h2>
+			<h2 style="color: #D8A7B1;">X: {xScore}</h2>
+			<h2 style="color: #A9C9C9">O: {oScore}</h2>
 		</div>
 		<div class="row">
 			<div
