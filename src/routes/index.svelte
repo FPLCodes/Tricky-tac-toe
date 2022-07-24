@@ -18,17 +18,19 @@
 		oScore = 0;
 
 	let winner = '';
-
 	let canClick = '';
+	let turn = 'X';
 
 	// Players move
 	function handleClick(row, col) {
 		if (winner === '' && board[row][col] === '') {
 			board[row][col] = 'x';
 			canClick = 'pointer-events:none';
+			turn = 'O';
 			setTimeout(() => {
 				canClick = '';
-			}, 1200);
+				turn = 'X';
+			}, 1250);
 			checkForWin();
 
 			if (winner === '') {
@@ -80,6 +82,20 @@
 			<h2 style="color: #A9C9C9">O: {oScore}</h2>
 		</div>
 	</div>
+
+	{#if winner === ''}
+		<div class="turn">
+			<h1 style="color: gray;">
+				{#if turn === 'X'}
+					<span style="color: #D8A7B1;">{turn}</span>
+				{:else}
+					<span style="color: #A9C9C9">{turn}</span>
+				{/if}
+				turn
+			</h1>
+		</div>
+	{/if}
+
 	<div class="board" style={canClick}>
 		<div class="row">
 			<div
@@ -190,7 +206,7 @@
 	.score {
 		display: flex;
 		gap: 3.5rem;
-		margin-bottom: 3.5rem;
+		margin-bottom: 1rem;
 		font-size: 2.3rem;
 	}
 
@@ -199,11 +215,15 @@
 		border: solid 4px #d98491;
 		border-radius: 0.75rem;
 		width: 9rem;
-		height: 7rem;
+		height: 6rem;
 		text-align: center;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+
+	.turn {
+		text-align: center;
 	}
 
 	.board {
@@ -211,6 +231,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		margin-top: 2.5rem;
 	}
 
 	.row {
@@ -250,7 +271,7 @@
 	}
 
 	.reset {
-		margin-top: 3rem;
+		margin-top: 2rem;
 		cursor: pointer;
 		border: solid 3px;
 		border-radius: 6px;
