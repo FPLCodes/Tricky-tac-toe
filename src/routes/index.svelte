@@ -19,10 +19,16 @@
 
 	let winner = '';
 
+	let canClick = '';
+
 	// Players move
 	function handleClick(row, col) {
 		if (winner === '' && board[row][col] === '') {
 			board[row][col] = 'x';
+			canClick = 'pointer-events:none';
+			setTimeout(() => {
+				canClick = '';
+			}, 1200);
 			checkForWin();
 
 			if (winner === '') {
@@ -74,7 +80,7 @@
 			<h2 style="color: #A9C9C9">O: {oScore}</h2>
 		</div>
 	</div>
-	<div class="board">
+	<div class="board" style={canClick}>
 		<div class="row">
 			<div
 				style="border-top: none; border-left: none"
