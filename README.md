@@ -10,4 +10,4 @@ Try it out: https://tricky-tac-toe.netlify.app
 - Learn more about minimax: https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/?ref=lbp
 
 ## Demo
-Coming soon
+![alt text](https://github.com/FPLCodes/Tricky-tac-toe/blob/main/demo/demo.gif)
